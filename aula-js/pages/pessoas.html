@@ -1,0 +1,26 @@
+<ul id="pessoas" class="collection">
+    
+</ul>
+
+<script>
+    $.getJSON('http://localhost:3000/alunos', function(data, status){
+        console.log(data)
+        let pessoas = []
+
+        for (let pessoa of data) {
+            pessoas.push(`
+            <li class="collection-item avatar">
+            <img src="../assets/images/perfil.jpeg" alt="" class="circle">
+            <span class="title">${pessoa.nome}</span>
+            <p>${pessoa.curso || 'Não tem'} <br>
+             ${pessoa.matricula || 'Não tem'}
+            </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+            </li>
+            `)
+        }
+
+        $('#pessoas').html(pessoas)
+
+    })
+</script>
