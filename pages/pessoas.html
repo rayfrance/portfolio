@@ -32,7 +32,7 @@
 
 <script>
      function pegarDados() {
-       $.getJSON('http://localhost:3000/alunos', function(data, status){
+       $.getJSON('https://server-front.herokuapp.com/alunos', function(data, status){
           console.log(data)
           let pessoas = []
      for (let pessoa of data){
@@ -53,7 +53,7 @@
 
   function pegaId(id){
     console.log('o id é', id)
-    $.getJSON(`http://localhost:3000/alunos/${id}`, function(data, status){
+    $.getJSON(`https://server-front.herokuapp.com/alunos/${id}`, function(data, status){
       console.log(data)
     })
   }
@@ -71,7 +71,7 @@
   //  fetch("http://localhost:3000/alunos", {method: "post", body: dadosSalvar}).then(function(res){
   //    console.log('os dados foram salvos', res)
   //  })
-   $.post("http://localhost:3000/alunos", dadosSalvar, function(result){
+   $.post("https://server-front.herokuapp.com/alunos", dadosSalvar, function(result){
     console.log('os dados foram salvos', result)
    })
    pegarDados()
