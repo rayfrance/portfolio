@@ -1,5 +1,9 @@
-<div class="row">
-  <h4>Lista de alunos</h4>
+<h4>Lista de alunos</h4>
+<button id="btnInserir"onclick="addAluno()" class="btn waves-effect waves-light" name="action">Novo Aluno
+  <i class="material-icons right">add</i>
+</button>
+
+<div hidden id="formCrud" class="row">
   <form class="col s12">
     <div class="row">
       <div class="input-field col s12">
@@ -16,11 +20,14 @@
       </div>
     </div>
   </form>
-  <button onclick="salvarDados()" class="btn waves-effect waves-light" name="action">Salvar
+  <button id="btnSalvar" onclick="salvarDados()" class="btn waves-effect waves-light" name="action">Salvar
     <i class="material-icons right">send</i>
   </button>
-  <button onclick="pegarDados()" class="btn waves-effect waves-light" name="action">Listar
+  <button hidden id="btnAtualizar" onclick="atualizarDados()" class="btn waves-effect waves-light" name="action">Atualizar
     <i class="material-icons right">send</i>
+  </button>
+  <button onclick="cancelar()" class="btn waves-effect waves-light" name="action">Cancelar
+    <i class="material-icons right">cancel</i>
   </button>
 </div>
 
@@ -31,6 +38,24 @@
 </ul>
 
 <script>
+
+     function addAluno(){
+        $('#formCrud').show()
+        $('#pessoas').hide()
+        $('#btnSalvar').hide()
+        $('#btnAtualizar').hide()
+        $('#btnInserir').hide()
+
+     }
+
+     function cancelar(){
+        $('#formCrud').hide()
+        $('#pessoas').show()
+        $('#btnSalvar').show()
+        $('#btnInserir').hide()
+
+     }
+
      function pegarDados() {
        $.getJSON('https://server-front.herokuapp.com/alunos', function(data, status){
           console.log(data)
@@ -48,14 +73,24 @@
           `)
      }
      $('#pessoas').html(pessoas)
+     $('#pessoas').show()
      })
     }
+
+    pegarDados()
 
   function pegaId(id){
     console.log('o id é', id)
     $.getJSON(`https://server-front.herokuapp.com/alunos/${id}`, function(data, status){
       console.log(data)
+      $('#nome').val(data.nome)
+      $('#curso').val(data.curso)
+      $('#matricula').val(data.matricula)
     })
+    addAluno()
+    $('#btnSalvar').hide()
+    $('#btnAtualizar').show()
+
   }
 
   function salvarDados(){
@@ -71,6 +106,22 @@
   //  fetch("http://localhost:3000/alunos", {method: "post", body: dadosSalvar}).then(function(res){
   //    console.log('os dados foram salvos', res)
   //  })
+   $.post("https://server-front.herokuapp.com/alunos", dadosSalvar, function(result){
+    console.log('os dados foram salvos', result)
+   })
+   pegarDados()
+  }
+
+  function atualizarDados(){
+    var dados = $("input")
+
+   dadosSalvar = {
+     nome: dados[0].value,
+     curso: dados[1].value,
+     matricula: dados[2].value
+   }
+   console.log('dados pra salvar', dadosSalvar)
+
    $.post("https://server-front.herokuapp.com/alunos", dadosSalvar, function(result){
     console.log('os dados foram salvos', result)
    })
