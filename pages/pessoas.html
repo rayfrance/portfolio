@@ -56,6 +56,12 @@
 
      }
 
+     function putAluno(){
+      $('#btnSalvar').hide()
+      $('#btnAtualizar').show()
+      $('#btnInserir').show()
+     }
+
      function pegarDados() {
        $.getJSON('https://server-front.herokuapp.com/alunos', function(data, status){
           console.log(data)
@@ -88,8 +94,6 @@
       $('#matricula').val(data.matricula)
     })
     addAluno()
-    $('#btnSalvar').hide()
-    $('#btnAtualizar').show()
 
   }
 
